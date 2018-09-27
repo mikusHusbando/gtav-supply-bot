@@ -8,19 +8,30 @@ bot = commands.bot(command_prefox=prefix, description="A small bot keeping track
 async def on_ready():
     print('Bot is ready for use')
 
+@bot.command
+async def track
+# register a business for tracking
+
 @bot.command()
 async def setup
-# register a business for timing
+# fills the supplies of a business (done as part of the setup mission
     return gotcha
 
 @bot.command()
 async def supplied
-# add time to reminder
+# sets the supply to full in 10 minutes
     return gotcha
 
 @bot.command()
 async def sold
-# reset stock
+# reset stock to zero
+    return gotcha
+
+@bot.command()
+async def raided
+# reset stock to zero
+# reset supplies to zero
+#
     return gotcha
 
 @bot.command()

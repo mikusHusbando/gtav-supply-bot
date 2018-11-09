@@ -1,55 +1,76 @@
 import discord
-from discord.ext import commands
 
-prefix = "?"
-bot = commands.bot(command_prefox=prefix, description="A small bot keeping track of your GTA Business supplies")
+#read token from file so it is not in the repository
+with open('~/discord-bot-secret') as f:
+    discord_bot_secret = f.readline().strip()
 
-@bot.event
+client = discord.Client()
+
+@client.event
+async def on_message(message):
+    # we do not want the bot to reply to itself
+    if message.author == client.user:
+        return
+
+    if message.content.startswith('!hello'):
+        msg = 'Hello {0.author.mention}'.format(message)
+        client.send_message(message.channel, msg)
+
+@client.event
+async def on_ready():
+    print('Logged in as')
+    print(client.user.name)
+    print(client.user.id)
+    print('------')
+
+client.run(discord_bot_secret)
+
+@client.event
 async def on_ready():
     print('Bot is ready for use')
 
-@bot.command
-async def track
+@client.command
+async def track(business):
 # register a business for tracking
 
-@bot.command()
-async def setup
+@client.command()
+async def setup(business):
 # fills the supplies of a business (done as part of the setup mission
-    return gotcha
+    return
 
-@bot.command()
-async def supplied
+@client.command()
+async def supplied(business):
 # sets the supply to full in 10 minutes
-    return gotcha
+    return
 
-@bot.command()
-async def sold
+@client.command()
+async def sold(business):
 # reset stock to zero
-    return gotcha
+    return
 
-@bot.command()
-async def raided
+@client.command()
+async def raided(business):
 # reset stock to zero
-# reset supplies to zero
-#
-    return gotcha
+#ask about supplies, gangster or police raid?
+#maybe call this reset and let the user choose
 
-@bot.command()
-async def pause
+@client.command()
+async def pause(business):
 #pause the timer (when closing the game for example)
-    return gotcha
+#maybe automatically call this if we pick up user leaving gta
+    return
 
-@bot.command()
-async def resume
+@client.command()
+async def resume(business):
 #resume
-    return gotcha
+    return
 
-@bot.command()
-async def remind
+@client.command()
+async def remind(minutes):
 #set up a custom notification time
-    return gotcha
+    return
 
-@bot.command()
-async def status
+@client.command()
+async def status():
 #print supply and stock info
-    return gotcha
+    return

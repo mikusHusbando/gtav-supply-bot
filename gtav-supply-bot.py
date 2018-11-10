@@ -22,7 +22,7 @@ async def on_message(message):
         msg = 'Hello {0.author.mention}'.format(message)
         await client.send_message(message.channel, msg)
     elif message.content.startswith('!supplied:'):
-        supplied(message)
+        await supplied(message)
 @client.event
 async def on_ready():
     print('Logged in as')
@@ -46,7 +46,7 @@ async def setup(business):
     # fills the supplies of a business (done as part of the setup mission
     return
 
-def supplied(message):
+async def supplied(message):
     parameter = message.content.split('!supplied:')[1].strip().lower()
     author = message.author
     for b in business:
@@ -55,7 +55,7 @@ def supplied(message):
             if not timer:
                 timer = []
             timer[business.index(parameter)] = time.time() +(ticSum*b.ticTime)
-            client.send_message(message.channel, 'started timer for {}, finishes : {}.'.format(parameter,timer[business.index(parameter)]))
+            await client.send_message(message.channel, 'started timer for {}, finishes : {}.'.format(parameter,timer[business.index(parameter)]))
             return
     # sets the supply to full in 10 minutes
     return

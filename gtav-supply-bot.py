@@ -41,7 +41,7 @@ async def track(business):
     client.send_message(message.channel, "tracking" + business)
     return
 
-@client.event()
+@client.event
 async def setup(business):
     # fills the supplies of a business (done as part of the setup mission
     return
@@ -58,37 +58,38 @@ async def supplied(message):
             await client.send_message(message.channel, 'started timer for {}, finishes : {}.'.format(parameter,timer[business.index(parameter)]))
             return
     # sets the supply to full in 10 minutes
+    await client.send_message(message.channel, 'error')
     return
 
-@client.event()
+@client.event
 async def sold(business):
     # reset stock to zero
     return
 
-@client.event()
+@client.event
 async def raided(business):
     # reset stock to zero
     # ask about supplies, gangster or police raid?
     # maybe call this reset and let the user choose
     return
 
-@client.event()
+@client.event
 async def pause(business):
     # pause the timer (when closing the game for example)
     # maybe automatically call this if we pick up user leaving gta
     return
 
-@client.event()
+@client.event
 async def resume(business):
     #resume
     return
 
-@client.event()
+@client.event
 async def remind(minutes):
     # set up a custom notification time
     return
 
-@client.event()
+@client.event
 async def status():
     # print supply and stock info
     return

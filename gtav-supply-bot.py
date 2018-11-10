@@ -1,6 +1,7 @@
 import discord
 import sys
 import time
+import threading
 # read token from file so it is not in the repository
 with open('/root/discord-bot-secret') as f:
     discord_bot_secret = f.readline().strip()
@@ -51,16 +52,15 @@ async def supplied(message):
     author = message.author
     for b in business:
         if b.text == parameter:
-            timer = timerDict[author]
-            if not timer:
-                timer = []
-            timer[business.index(parameter)] = time.time() +(ticSum*b.ticTime)
+            threading.Timer(time.time() +(ticSum*b.ticTime), timeIsUp,[message,parameter])
             await client.send_message(message.channel, 'started timer for {}, finishes : {}.'.format(parameter,timer[business.index(parameter)]))
             return
     # sets the supply to full in 10 minutes
-    await client.send_message(message.channel, 'error')
+    await client.send_message(message.channel, 'wrong business!')
     return
-
+async def timeIsUp(parameter):
+    await client.send_message(parameter[0].channel, 'timers up for {}!'.format(parameter[1]))
+    return
 @client.event
 async def sold(business):
     # reset stock to zero

@@ -8,8 +8,8 @@ with open('/root/discord-bot-secret') as f:
 client = discord.Client()
 timerDict = {}
 
-business = [{text:'bunker',ticTime:84},{text:'coke',ticTime:72},{text:'meth',ticTime:90},
-            {text:'cash',ticTime:96},{text:'weed',ticTime:120},{text:'docs',ticTime:90}]
+business = [{'text':'bunker','ticTime':84},{'text':'coke','ticTime':72},{'text':'meth','ticTime':90},
+            {'text':'cash','ticTime':96},{'text':'weed','ticTime':120},{'text':'docs','ticTime':90}]
 ticSum = 100
 while True:
     pass

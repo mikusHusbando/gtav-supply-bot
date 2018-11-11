@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 import asyncio
 import time
+
 import discord
 
 from classes.business import business
 from classes.timer_data import timer_data
 
 # read token from file so it is not in the repository
-with open('~/discord-bot-secret') as f:
+with open('/root/discord-bot-secret') as f:
     discord_bot_secret = f.readline().strip()
 
 client = discord.Client()
@@ -53,14 +54,14 @@ def extract_arguments(message):
 
 
 async def supplied(arguments):
-    business_details = business_object.get_buisiness_details(arguments[1])
-    out_message = 'wrong business!'
-    if business_details:
-        resupply_time = time.time() + tick_amount * business_details['supply_tick_seconds']
-        timer_data_object.add_timer(arguments[0], business_details['type'], resupply_time)
-        out_message = 'added timer for {} running {} seconds!'.format(business_details['type'], resupply_time)
-    await message_wrapper(out_message)
-    await message_wrapper("test")
+    business_details = business_object.get_business_details(arguments[2])
+
+    if business_details is not None:
+        resupply_time = time.time() + tick_amount * business_details
+        timer_data_object.add_timer(arguments[0], business_details, resupply_time)
+        out_message = 'added timer for {} running {} seconds!'.format(business_details, resupply_time)
+        await message_wrapper("success")
+    await message_wrapper("fail")
 
 
 @client.event

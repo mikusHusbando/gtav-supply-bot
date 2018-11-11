@@ -34,12 +34,12 @@ async def on_message(message):
     if message.author == client.user:
         return
     # we want to only communicate in a dedicated channel to not spam the servers. hardcoded ID for now
-    elif message.channel == bot_cmd_channel and message.content.startswith('!'):
-        if message.content.startswith('!hello'):
-            msg = 'Hello {0.author.mention}'.format(message)
-            await client.send_message(message.channel, msg)        
-        elif message.content.startswith('!supplied'):
-            await supplied(extract_arguments(message))
+    # if message.channel == bot_cmd_channel and message.content.startswith('!'):
+    if message.content.startswith('!hello'):
+        msg = 'Hello {0.author.mention}'.format(message)
+        await client.send_message(message.channel, msg)
+    if message.content.startswith('!supplied'):
+        await supplied(extract_arguments(message))
 
 def extract_arguments(message):
     out = [message.author.id]
@@ -52,7 +52,6 @@ async def supplied(arguments):
     business_details = business_object.get_buisiness_details(arguments[1])
     out_message = 'wrong business!'
     if business_details:
-        supply_time = time.time()
         resupply_time = time.time() + tick_amount*business_details['supply_tick_seconds']
         timer_data_object.add_timer(arguments[0],business_details['type'],resupply_time)
         out_message = 'added timer for {} running {} seconds!'.format(business_details['type'],resupply_time)

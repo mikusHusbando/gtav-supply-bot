@@ -1,13 +1,16 @@
+# -*- coding: utf-8 -*-
 import asyncio
 import time
 import discord
-
+from classes.business import business
+from classes.timer_data import timer_data
 # read token from file so it is not in the repository
 with open('/root/discord-bot-secret') as f:
     discord_bot_secret = f.readline().strip()
 
 client = discord.Client()
-
+business_object = business()
+timer_data_object = timer_data()
 bot_cmd_channel = discord.Object(id='494903538753863680')
 
 tick_amount = 100
@@ -16,42 +19,45 @@ tick_amount = 100
 async def check_progress_loop():
     await client.wait_until_ready()
     while not client.is_closed:
-        await wrapper("waiting 5sec")
-
+        #await message_wrapper('waiting 5sec')
+        for elapsed_timer in timer_data_object.get_elapsed_timer():#message that timer ended for the given type and author. does nothing if no timer elapsed
+            await message_wrapper('timer for {} is up for author id {}!'.format(elapsed_timer['type'],elapsed_timer['author_id']))
         await asyncio.sleep(5)
 
 
-async def wrapper(message_str):
+async def message_wrapper(message_str):
     await client.send_message(bot_cmd_channel, message_str)
 
 
 @client.event
 async def on_message(message):
-    if message.content.startswith('!hello'):
-        msg = 'Hello {0.author.mention}'.format(message)
-        await client.send_message(message.channel, msg)
-
     if message.author == client.user:
         return
-
     # we want to only communicate in a dedicated channel to not spam the servers. hardcoded ID for now
-    if message.channel == bot_cmd_channel and message.content.startswith("!"):
-
-        if message.content.startswith('!supplied'):
-            arguments = (extract_arguments(message))
-            await supplied(arguments)
-
+    elif message.channel == bot_cmd_channel and message.content.startswith('!'):
+        if message.content.startswith('!hello'):
+            msg = 'Hello {0.author.mention}'.format(message)
+            await client.send_message(message.channel, msg)        
+        elif message.content.startswith('!supplied'):
+            await supplied(extract_arguments(message))
 
 def extract_arguments(message):
-    message_parts = message.content.split(" ")
-    return [message.author, message_parts[0], message_parts[1], ]
+    out = [message.author.id]
+    for c in message.content.split(' '):
+        out.append(c)
+    return out
 
 
 async def supplied(arguments):
-    supply_time = time.time()
-    resupply_time = time.time() + tick_amount*tick_seconds[arguments[1]]
-    business.supplied(arguments)
-    await wrapper(arguments)
+    business_details = business_object.get_buisiness_details(arguments[1])
+    out_message = 'wrong business!'
+    if business_details:
+        supply_time = time.time()
+        resupply_time = time.time() + tick_amount*business_details['supply_tick_seconds']
+        timer_data_object.add_timer(arguments[0],business_details['type'],resupply_time)
+        out_message = 'added timer for {} running {} seconds!'.format(business_details['type'],resupply_time)
+    await message_wrapper(out_message)
+
 
 
 @client.event

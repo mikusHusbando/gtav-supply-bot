@@ -38,11 +38,11 @@ async def on_message(message):
     if message.channel == bot_cmd_channel and message.content.startswith("!"):
 
         if message.content.startswith('!supplied'):
-            arguments = (extractArguments(message))
+            arguments = (extract_arguments(message))
             await supplied(arguments)
 
 
-def extractArguments(message):
+def extract_arguments(message):
     message_parts = message.content.split(" ")
     return [message.author, message_parts[0], message_parts[1], ]
 

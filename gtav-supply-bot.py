@@ -62,6 +62,7 @@ async def supplied(arguments):
         timer_data_object.add_timer(arguments[0], business_details, resupply_time)
         # out_message = 'added timer for {} running {} seconds!'.format(business_details, resupply_time)
         await message_wrapper("success")
+        return None
     await message_wrapper("fail")
 
 

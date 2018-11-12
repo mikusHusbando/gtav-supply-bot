@@ -20,8 +20,8 @@ class timerData:
         out = []
         current_time = time.time()
         for author_id in self.user_supply_data:
-            for business_type, resupply_time in self.user_supply_data[author_id]:
-                if current_time >= resupply_time:
+            for business_type in self.user_supply_data[author_id]:
+                if current_time >= self.user_supply_data[author_id]['resupply_time']:
                     out.append({'type': business_type,
                                 'author_id': author_id})
         for o in out:  # reset elapsed timer that are returned. must be in a new loop, because looped arrays can not be modified

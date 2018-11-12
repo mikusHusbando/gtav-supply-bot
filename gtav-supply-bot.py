@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 import asyncio
 import time
-
 import discord
-
 from classes.business import business
 from classes.timerdata import timerData
 
@@ -15,9 +13,7 @@ client = discord.Client()
 business_object = business()
 timer_data_object = timerData()
 bot_cmd_channel = discord.Object(id='494903538753863680')
-
 tick_amount = 100
-
 
 async def check_progress_loop():
     await client.wait_until_ready()
@@ -39,7 +35,7 @@ async def on_message(message):
         return
     # we want to only communicate in a dedicated channel to not spam the servers. hardcoded ID for now
     # if message.channel == bot_cmd_channel and message.content.startswith('!'):
-    if message.content.startswith('!hello'):
+    elif message.content.startswith('!hello'):
         msg = 'Hello {0.author.mention}'.format(message)
         await client.send_message(message.channel, msg)
 

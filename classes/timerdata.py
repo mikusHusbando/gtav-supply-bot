@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
 
-
 class timerData:
     user_supply_data = {}
 
@@ -11,9 +10,8 @@ class timerData:
         except KeyError:
             author_data = {}
         author_data[business_type] = resupply_time
-        self.user_supply_data[author_id] = author_data
+        self.user_supply_data[author_id] = author_data #maybe add a confirmation if there is already a timer with the same type
 
-    # maybe add a confirmation if there is already a timer with the same type
     def get_elapsed_timer(self):  # return type and author_id of all elapsed timers
         out = []
         current_time = time.time()

@@ -5,7 +5,7 @@ import time
 import discord
 
 from classes.business import business
-from classes.timer_data import timer_data
+from classes.timerdata import timerData
 
 # read token from file so it is not in the repository
 with open('/root/discord-bot-secret') as f:
@@ -13,7 +13,7 @@ with open('/root/discord-bot-secret') as f:
 
 client = discord.Client()
 business_object = business()
-timer_data_object = timer_data()
+timer_data_object = timerData()
 bot_cmd_channel = discord.Object(id='494903538753863680')
 
 tick_amount = 100
@@ -42,6 +42,7 @@ async def on_message(message):
     if message.content.startswith('!hello'):
         msg = 'Hello {0.author.mention}'.format(message)
         await client.send_message(message.channel, msg)
+
     if message.content.startswith('!supplied'):
         await supplied(extract_arguments(message))
 
@@ -59,7 +60,7 @@ async def supplied(arguments):
     if business_details is not None:
         resupply_time = time.time() + tick_amount * business_details
         timer_data_object.add_timer(arguments[0], business_details, resupply_time)
-        out_message = 'added timer for {} running {} seconds!'.format(business_details, resupply_time)
+        # out_message = 'added timer for {} running {} seconds!'.format(business_details, resupply_time)
         await message_wrapper("success")
     await message_wrapper("fail")
 

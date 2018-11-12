@@ -56,6 +56,7 @@ async def supplied(arguments):
     if business_details is not None:
         resupply_time = time.time() + tick_amount * business_details
         timer_data_object.add_timer(arguments[0], business_details, resupply_time)
+        timer_data_object.add_timer(arguments[0], business_details, time.time()+30)#test timer with 30s. remove for production!
         # out_message = 'added timer for {} running {} seconds!'.format(business_details, resupply_time)
         await message_wrapper("success")
         return None

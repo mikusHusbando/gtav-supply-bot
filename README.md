@@ -8,6 +8,7 @@
 wip
 
 `!status` : guess what..
+
 `!remind` : reminds you x min earlier
 
 add stock logic / extension for not fully upgraded businesses

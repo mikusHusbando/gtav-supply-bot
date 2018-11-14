@@ -1,15 +1,15 @@
 # G(T)A(V)Y-supply-bot:
 ## Commands:
 
-`!hello`: print commands.
+`!hello`: say hello to the bot (check if its running)
 
 `!supplied {business}`: start timer for business. (bunker, coke, meth, cash, weed, docs).
 
-wip
+###wip:
 
-`!status` : guess what..
+`!status` : show amount of remaining supplies
 
-`!remind` : reminds you x min earlier
+`!remind` : remembers you a specified amount of minutes before you run out of supplies 
 
 add stock logic / extension for not fully upgraded businesses
 

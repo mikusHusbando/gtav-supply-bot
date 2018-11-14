@@ -51,12 +51,12 @@ def extract_arguments(message):
 
 
 async def supplied(arguments):
-    business_details = business_object.get_business_details(arguments[2])
+    business_details = business_object.get_supply_tick_seconds(arguments[2])
 
     if business_details is not None:
         resupply_time = time.time() + tick_amount * business_details
         timer_data_object.add_timer(arguments[0], business_details, resupply_time)
-        timer_data_object.add_timer(arguments[0], business_details, time.time()+30)#test timer with 30s. remove for production!
+        timer_data_object.add_timer(arguments[0], business_details, time.time()+3)#test timer with 3s {because nobody has 30 seconds to wait}. remove for production!
         # out_message = 'added timer for {} running {} seconds!'.format(business_details, resupply_time)
         await message_wrapper("success")
         return None
